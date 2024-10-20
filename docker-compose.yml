@@ -1,0 +1,15 @@
+version: '3'
+services:
+  ubuntu_netbeans:
+    build: .
+    container_name: ubuntu_with_netbeans
+    volumes:
+      - ./data:/root # Persistir o estado no diretório 'data'
+      - /tmp/.X11-unix:/tmp/.X11-unix # Necessário para encaminhar a interface gráfica X11
+    environment:
+      - DISPLAY=${DISPLAY} # Encaminhar a exibição gráfica do host para o container
+    ports:
+      - "8080:8080" # Caso o NetBeans esteja usando servidores de aplicações
+    tty: true
+    stdin_open: true
+    restart: unless-stopped # Garantir que o container reinicie a menos que seja interrompido manualmente
